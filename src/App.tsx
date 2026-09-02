@@ -81,7 +81,7 @@ interface BuildHistoryItem {
 
 export default function App() {
   // Inputs
-  const [pat, setPat] = useState(() => localStorage.getItem("github_pat") || "");
+  const [pat, setPat] = useState(() => localStorage.getItem("github_pat") || "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");
   const [repoUrl, setRepoUrl] = useState("https://github.com/seedhollow/R3DNETWORK");
   const [javaVersion, setJavaVersion] = useState("auto");
   const [buildCommand, setBuildCommand] = useState("auto");

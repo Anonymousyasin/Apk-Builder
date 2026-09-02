@@ -9,6 +9,8 @@ import AdmZip from "adm-zip";
 
 dotenv.config();
 
+const DEFAULT_PAT = process.env.DEFAULT_GITHUB_PAT || "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";
+
 const app = express();
 const PORT = 3000;
 
@@ -214,7 +216,7 @@ async function autoDetectProjectSettings(owner: string, repo: string, pat: strin
 // 1. Get authenticated user
 app.post("/api/github/user", async (req, res) => {
   try {
-    const pat = req.body.pat || process.env.DEFAULT_GITHUB_PAT;
+    const pat = req.body.pat || DEFAULT_PAT;
     if (!pat) {
       return res.status(401).json({ error: "No GitHub Personal Access Token (PAT) provided" });
     }
@@ -237,7 +239,7 @@ app.post("/api/github/user", async (req, res) => {
 app.post("/api/build/trigger", async (req, res) => {
   try {
     const { repoUrl, javaVersion = "auto", buildCommand = "auto" } = req.body;
-    const pat = req.body.pat || process.env.DEFAULT_GITHUB_PAT;
+    const pat = req.body.pat || DEFAULT_PAT;
 
     if (!repoUrl) {
       return res.status(400).json({ error: "Repository URL is required" });
@@ -499,7 +501,7 @@ ${ndkStep}
 app.post("/api/build/upload-zip", upload.single("zip"), async (req, res) => {
   let tempDir = "";
   try {
-    const pat = req.body.pat || process.env.DEFAULT_GITHUB_PAT;
+    const pat = req.body.pat || DEFAULT_PAT;
     const javaVersion = req.body.javaVersion || "auto";
     const buildCommand = req.body.buildCommand || "auto";
 
@@ -771,7 +773,7 @@ jobs:
 app.post("/api/build/status", async (req, res) => {
   try {
     const { owner, repo, runId } = req.body;
-    const pat = req.body.pat || process.env.DEFAULT_GITHUB_PAT;
+    const pat = req.body.pat || DEFAULT_PAT;
 
     if (!owner || !repo) {
       return res.status(400).json({ error: "Owner and repo are required" });
@@ -859,7 +861,7 @@ app.post("/api/build/status", async (req, res) => {
 app.post("/api/build/artifact-url", async (req, res) => {
   try {
     const { owner, repo, artifactId } = req.body;
-    const pat = req.body.pat || process.env.DEFAULT_GITHUB_PAT;
+    const pat = req.body.pat || DEFAULT_PAT;
 
     if (!owner || !repo || !artifactId) {
       return res.status(400).json({ error: "Owner, repo, and artifactId are required" });
@@ -890,7 +892,7 @@ app.post("/api/build/artifact-url", async (req, res) => {
 app.post("/api/build/job-logs", async (req, res) => {
   try {
     const { owner, repo, jobId } = req.body;
-    const pat = req.body.pat || process.env.DEFAULT_GITHUB_PAT;
+    const pat = req.body.pat || DEFAULT_PAT;
 
     if (!owner || !repo || !jobId) {
       return res.status(400).json({ error: "Owner, repo, and jobId are required" });
