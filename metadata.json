@@ -1,0 +1,6 @@
+{
+  "name": "GitHub APK Builder",
+  "description": "Automate building Android APKs from any public or private GitHub repository using GitHub Actions and Personal Access Tokens.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
